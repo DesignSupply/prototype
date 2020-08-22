@@ -12,6 +12,7 @@
     if(!is_admin()) {
       wp_deregister_script('jquery');
       wp_enqueue_script('main-js', get_template_directory_uri().'/assets/js/main.min.js', array(), null, 'all');
+      wp_enqueue_script('infinite-loading-post-js', get_template_directory_uri().'/plugins/infinite-loading/post.js', array(), null, 'all');
     }
   }
   add_action('wp_enqueue_scripts', 'register_script');

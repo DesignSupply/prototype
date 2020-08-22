@@ -27,6 +27,15 @@
           </section>
         </article>
         <!-- article end -->
+        <article>
+          <section>
+            <h1>
+              無限読み込みコンテンツ
+            </h1>
+<?php get_template_part('plugins/infinite-loading/loading'); ?>    
+          </section>
+        </article>
+        <!-- article end -->
 <?php get_sidebar(); ?>
       </main>
       <!-- main end -->
