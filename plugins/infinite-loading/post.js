@@ -1,9 +1,9 @@
 // POST先のPHPファイルパス
 const api_url = 'http://localdev.local/wp-content/themes/prototype/plugins/infinite-loading/loop.php';
-// 初期表示投稿数
-let current = 0;
+// 初期表示投稿数（投稿取得開始位置）
+let current = 3;
 // 追加取得投稿数
-const add = 1;
+const add = 3;
 // 追加取得トリガー要素指定
 const trigger = document.getElementById('infinite_loading_button');
 // 無限ローディング表示のコンテナ要素指定
@@ -20,13 +20,16 @@ trigger.addEventListener('click', () => {
     return response.json();
   })
   .then((json) => {
-    container.insertAdjacentHTML('beforeEnd', json.content);
-    if(json.count < 1) {
+    console.log(json.content[0])
+    json.content.forEach((item) => {
+      container.insertAdjacentHTML('beforeEnd', item);
+    })
+    current = current + add;
+    if(json.complete) {
       trigger.remove();
     }
   })
   .catch((error) => {
-    console.log(error);
+    return error.message;
   });
-  current = current + add;
 });
