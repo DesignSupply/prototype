@@ -1,5 +1,5 @@
 // POST先のPHPファイルパス
-const api_url = 'http://localdev.local/wp-content/themes/prototype/plugins/infinite-loading/loop.php';
+const api_url = 'https://example.com/*******/wp-content/themes/prototype/plugins/infinite-loading/loop.php';
 // 初期表示投稿数（投稿取得開始位置）
 let current = 3;
 // 追加取得投稿数
@@ -20,7 +20,6 @@ trigger.addEventListener('click', () => {
     return response.json();
   })
   .then((json) => {
-    console.log(json.content[0])
     json.content.forEach((item) => {
       container.insertAdjacentHTML('beforeEnd', item);
     })
