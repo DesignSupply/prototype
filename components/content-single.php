@@ -17,7 +17,7 @@
 <br>
 
 <!-- 投稿日 -->
-<?php echo get_the_date(); ?>
+<?php echo get_the_date('Y/m/d（D）'); ?>
 <br>
 
 <!-- 最終更新日 -->
