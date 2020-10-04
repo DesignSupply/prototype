@@ -1,6 +1,15 @@
 <?php get_header(); ?>
       <main>
-<?php get_template_part('components/page-header'); ?>        
+<?php get_template_part('components/page-header'); ?>
+        <article>
+          <section>
+            <h1>
+              <a href="<?php echo esc_url(home_url()); ?>">
+                <img src="<?php echo get_template_directory_uri(); ?>/screenshot.png" alt="<?php echo get_bloginfo('name'); ?>">
+              </a>
+            </h1>
+          </section>
+        </article>
         <article>
           <section>
             <h1>
