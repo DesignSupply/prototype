@@ -22,7 +22,7 @@
     foreach($all_posts as $post) {
       $data = array(
         'ID' => $post->ID,
-        'thumbnail' => get_the_post_thumbnail($post->ID, 'full'),
+        'thumbnail' => get_the_post_thumbnail_url($post->ID, 'full'),
         'slug' => $post->post_name,
         'date' => $post->post_date,
         'modified' => $post->post_modified,
