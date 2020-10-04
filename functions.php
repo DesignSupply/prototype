@@ -17,5 +17,8 @@
 
   // メール送信関数
   require_once('functions/mail.php');
+  
+  // REST API設定
+  require_once('functions/api.php');
 
 ?>
