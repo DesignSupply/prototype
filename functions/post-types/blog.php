@@ -4,13 +4,16 @@
     /**
      * カスタム投稿名：ブログ
      * スラッグ: blog
+     * URLに使用するスラッグ: blog
      */
     $postTypeName = 'ブログ';
     $postTypeSlug = 'blog';
+    $postTypeSlugFront = 'blog';
 
     $labels = array(
       "name" => __($postTypeName),
       "singular_name" => __($postTypeName),
+      "all_items" => $postTypeName.'一覧'
     );
     $args = array(
       "label" => __($postTypeName),
@@ -31,7 +34,7 @@
       "map_meta_cap" => true,
       "hierarchical" => false,
       "rewrite" => array( 
-        "slug" => $postTypeSlug, 
+        "slug" => $postTypeSlugFront, 
         "with_front" => true 
       ),
       "query_var" => true,
