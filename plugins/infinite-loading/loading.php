@@ -1,20 +1,65 @@
-<!-- Ajax無限ローディング 初期表示サブループ start -->
 <?php
-  $args = array(
-    'posts_per_page' => 3,
-    'post_type' => 'blog'
+  // デフォルト初期表示投稿数
+  $default_show_posts = 3;
+  // デフォルト追加投稿数
+  $default_loading_posts = 3;
+  // ローディング対象となる投稿タイプ
+  $target_post_type = 'blog';
+  require_once(dirname(__FILE__).'/../../../../../wp-load.php');
+  $offset_value = isset($_POST['currently_loaded_count']) ? $_POST['currently_loaded_count'] : $default_show_posts;
+  $loading_count = isset($_POST['additional_loading_count']) ? $_POST['additional_loading_count'] : $default_loading_posts;
+  $all_posts_query = new WP_Query(
+    array(
+      'post_type' => $target_post_type,
+      'posts_per_page' => -1
+    )
   );
-  $the_query = new WP_Query($args);
-  if($the_query->have_posts()):
+  $infinite_loading_query = new WP_Query(
+    array(
+      'post_type' => $target_post_type,
+      'posts_per_page' => (int)$loading_count,
+      'offset' => (int)$offset_value
+    )
+  );
+  $posts_count = $all_posts_query->found_posts;
+  if($infinite_loading_query->have_posts()):
 ?>
-  <?php while($the_query->have_posts()): $the_query->the_post(); ?>
-<?php get_template_part('components/loop'); ?>
+  <?php 
+    while($infinite_loading_query->have_posts()): 
+    $infinite_loading_query->the_post(); 
+  ?>
+    <?php 
+      $posts = $infinite_loading_query->posts;
+      $remaining_count = $posts_count - $offset_value - 1;
+      $contents = array();
+      foreach ($posts as $post) {
+        $html = $post->post_title;
+        $html .= '<br>';
+        $html .= '<a href="'.get_permalink($post->ID).'">'.get_permalink($post->ID).'</a>';
+        $html .= '<br>';
+        if(has_post_thumbnail($post->ID)) {
+          $html .= '<img src="'.get_the_post_thumbnail_url($post->ID, 'full').'" alt="'.$post->post_title.'">';
+        } else {
+          $html .= '<img src="********.jpg" alt="'.$post->post_title.'">';
+        }
+        $html .= '<br>';
+        $html .= get_the_excerpt($post->ID);
+        $html .= '<br>';
+        array_push($contents, $html);
+      }
+    ?>
   <?php endwhile; ?>
-<?php endif; ?>
+<?php 
+  $loading_complete = false;
+  if($remaining_count < $loading_count) {
+    $loading_complete = true;
+  }
+  echo json_encode(
+    array(
+      'complete'=>$loading_complete,
+      'content'=>$contents
+    )
+  );
+  endif; 
+?>
 <?php wp_reset_postdata(); ?>
-<!-- Ajax無限ローディング 初期表示サブループ end -->
-<div id="infinite_loading_container">
-<!-- Ajax無限ローディング 追加サブループ start -->
-<!-- Ajax無限ローディング 追加サブループ end -->
-</div>
-<button id="infinite_loading_button">もっと読み込む</button>

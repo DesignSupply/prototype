@@ -41,7 +41,28 @@
             <h1>
               無限読み込みコンテンツ
             </h1>
-<?php get_template_part('plugins/infinite-loading/loading'); ?>    
+            <!-- Ajax無限ローディング 初期表示サブループ start -->
+            <?php
+              $default_posts = 3;
+              $args = array(
+                'posts_per_page' => $default_posts,
+                'post_type' => 'blog'
+              );
+              $the_query = new WP_Query($args);
+              if($the_query->have_posts()):
+            ?>
+              <?php while($the_query->have_posts()): $the_query->the_post(); ?>
+<?php get_template_part('components/loop'); ?>
+              <?php endwhile; ?>
+              <!-- Ajax無限ローディング 初期表示サブループ end -->
+              <div id="infinite_loading_container">
+                <!-- Ajax無限ローディング 追加表示コンテンツ -->
+              </div>
+              <?php if($the_query->found_posts > $default_posts): ?>
+                <button id="infinite_loading_button">もっと読み込む</button>
+              <?php endif; ?>
+            <?php endif; ?>
+            <?php wp_reset_postdata(); ?>
           </section>
         </article>
         <!-- article end -->
