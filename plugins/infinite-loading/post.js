@@ -24,7 +24,7 @@ if(trigger) {
     })
     .then(function(json) {
       json.content.forEach(function(item) {
-        container.insertAdjacentHTML('beforeEnd', item);
+        container.insertAdjacentHTML('beforeend', item);
       })
       current = current + add;
       if(json.complete) {

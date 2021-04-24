@@ -1,19 +1,21 @@
 <?php
   // デフォルト初期表示投稿数
   $default_show_posts = 3;
+
   // デフォルト追加投稿数
   $default_loading_posts = 3;
+
   // ローディング対象となる投稿タイプ
   $target_post_type = 'blog';
+
+  // WordPress関数用ファイル読み込み
   require_once(dirname(__FILE__).'/../../../../../wp-load.php');
+
+  // フロント側からの表示件数情報取得
   $offset_value = isset($_POST['currently_loaded_count']) ? $_POST['currently_loaded_count'] : $default_show_posts;
   $loading_count = isset($_POST['additional_loading_count']) ? $_POST['additional_loading_count'] : $default_loading_posts;
-  $all_posts_query = new WP_Query(
-    array(
-      'post_type' => $target_post_type,
-      'posts_per_page' => -1
-    )
-  );
+
+  // 追加の無限読み込み用クエリ
   $infinite_loading_query = new WP_Query(
     array(
       'post_type' => $target_post_type,
@@ -21,7 +23,7 @@
       'offset' => (int)$offset_value
     )
   );
-  $posts_count = $all_posts_query->found_posts;
+  $posts_count = $infinite_loading_query->found_posts;
   if($infinite_loading_query->have_posts()):
 ?>
   <?php 
@@ -30,7 +32,7 @@
   ?>
     <?php 
       $posts = $infinite_loading_query->posts;
-      $remaining_count = $posts_count - $offset_value - 1;
+      $remaining_count = $posts_count - $offset_value;
       $contents = array();
       foreach ($posts as $post) {
         $html = $post->post_title;
@@ -51,13 +53,17 @@
   <?php endwhile; ?>
 <?php 
   $loading_complete = false;
-  if($remaining_count < $loading_count) {
+  if($remaining_count <= $loading_count) {
     $loading_complete = true;
   }
   echo json_encode(
     array(
       'complete'=>$loading_complete,
-      'content'=>$contents
+      'content'=>$contents,
+      'total_posts'=>$posts_count,
+      'loading_posts_count'=>$loading_count,
+      'loading_posts_start'=>$offset_value,
+      'remaining_posts'=>$remaining_count
     )
   );
   endif; 
