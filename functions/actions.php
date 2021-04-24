@@ -32,6 +32,13 @@
   }
   add_action('after_setup_theme', 'output_title');
 
+  // タイトルタグ区切り文字変更
+  function rewrite_title_separator($separator) {
+    $separator = '|';
+    return $separator;
+  }
+  add_filter('document_title_separator', 'rewrite_title_separator');
+
   // RSS用リンク出力
   add_theme_support('automatic-feed-links');
 
@@ -74,11 +81,42 @@
   }
   add_action('init', 'disable_emoji');
 
-  // デフォルト投稿メニュー非表示
+  // 不要メニュー非表示
   function remove_menus() {
     remove_menu_page('edit.php');
   }
   add_action('admin_menu', 'remove_menus');
+  if (current_user_can('editor')) {
+    // 編集者
+    function remove_menus_for_editor() {
+      remove_menu_page('tools.php');
+    }
+    add_action('admin_menu', 'remove_menus_for_editor');
+  } else if (current_user_can('author')) {
+    // 投稿者
+    function remove_menus_for_author() {
+      remove_menu_page('tools.php');
+    }
+    add_action('admin_menu', 'remove_menus_for_author');
+  } else if (current_user_can('contributor')) {
+    // 寄稿者
+    function remove_menus_for_contributor() {
+      remove_menu_page('tools.php');
+    }
+    add_action('admin_menu', 'remove_menus_for_contributor');
+  } else if (current_user_can('subscriber')) {
+    // 購読者
+    function remove_menus_for_subscriber() {
+      return;
+    }
+    add_action('admin_menu', 'remove_menus_for_subscriber');
+  }
+
+  // WordPressデフォルトのfaviconを非表示
+  function default_favicon_delete() {
+    exit;
+  }
+  add_action('do_faviconico', 'default_favicon_delete');
 
   // 抜粋文字数の指定
   function custom_excerpt_length($length) {   
