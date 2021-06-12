@@ -86,25 +86,25 @@
     remove_menu_page('edit.php');
   }
   add_action('admin_menu', 'remove_menus');
-  if (current_user_can('editor')) {
+  if(current_user_can('editor')) {
     // 編集者
     function remove_menus_for_editor() {
       remove_menu_page('tools.php');
     }
     add_action('admin_menu', 'remove_menus_for_editor');
-  } else if (current_user_can('author')) {
+  } else if(current_user_can('author')) {
     // 投稿者
     function remove_menus_for_author() {
       remove_menu_page('tools.php');
     }
     add_action('admin_menu', 'remove_menus_for_author');
-  } else if (current_user_can('contributor')) {
+  } else if(current_user_can('contributor')) {
     // 寄稿者
     function remove_menus_for_contributor() {
       remove_menu_page('tools.php');
     }
     add_action('admin_menu', 'remove_menus_for_contributor');
-  } else if (current_user_can('subscriber')) {
+  } else if(current_user_can('subscriber')) {
     // 購読者
     function remove_menus_for_subscriber() {
       return;
@@ -130,8 +130,40 @@
   }
   add_filter('excerpt_more', 'custom_excerpt_more');
 
+  // パスワード保護投稿の抜粋文変更
+  function excerpt_password_protected($excerpt) {
+    if(post_password_required()) {
+      $excerpt = 'この投稿はパスワードで保護されています';
+    }
+    return $excerpt;
+  }
+  add_filter('the_excerpt', 'excerpt_password_protected');
+
+  // パスワード保護投稿の入力フォーム導入文変更
+  function description_password_protected($text) {
+    $data_set = array(
+      'このコンテンツはパスワードで保護されています。閲覧するには以下にパスワードを入力してください。' => 'このコンテンツの閲覧はパスワードが必要です',
+      'パスワード: ' => '【パスワード】',
+      '確定' => '送信'
+    );
+    $search = array_keys($data_set);
+    $replace = array_values($data_set);
+    $text = str_replace($search, $replace, $text);
+    return $text;
+  }
+  add_filter('the_password_form', 'description_password_protected');
+
+  // パスワード保護投稿のタイトルプレフィックス変更
+  function prefix_password_protected() {
+    return '<span>【パスワード保護】</span>%s';
+  }
+  add_filter('protected_title_format', 'prefix_password_protected');
+
+  // 自動整形機能（wpautop）設定
+  remove_filter('the_excerpt', 'wpautop');
+
   // コンテンツ幅定義
-  if (!isset($contentWidth)) {
+  if(!isset($contentWidth)) {
     $contentWidth = 1440;
   }
 
@@ -144,7 +176,7 @@
   add_action('wp_logout','redirect_logout_page');
 
   // ユーザープロフィール情報追加
-  function add_user_profile( $userProfile ) {
+  function add_user_profile($userProfile) {
     $userProfile['Facebook'] = __('Facebookページ');
     $userProfile['Twitter'] = __('Twitterページ');
     return $userProfile;

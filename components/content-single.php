@@ -31,9 +31,9 @@
 <!-- サムネイル画像 -->
 <?php
   if(has_post_thumbnail()) {
-    echo '<img src="'.get_the_post_thumbnail_url(get_the_ID(), 'full').'" alt="'.get_the_title().'">';
+    echo '<img src="'.get_the_post_thumbnail_url(get_the_ID(), 'full').'" alt="'.wp_strip_all_tags(get_the_title()).'">';
   } else {
-    echo '<img src="********.jpg" alt="'.get_the_title().'">';
+    echo '<img src="********.jpg" alt="'.wp_strip_all_tags(get_the_title()).'">';
   }
 ?>
 <br>

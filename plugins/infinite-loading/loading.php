@@ -35,17 +35,22 @@
       $remaining_count = $posts_count - $offset_value;
       $contents = array();
       foreach ($posts as $post) {
-        $html = $post->post_title;
+        $html = '<br>';
+        $html .= get_the_title($post->ID);
         $html .= '<br>';
         $html .= '<a href="'.get_permalink($post->ID).'">'.get_permalink($post->ID).'</a>';
         $html .= '<br>';
         if(has_post_thumbnail($post->ID)) {
-          $html .= '<img src="'.get_the_post_thumbnail_url($post->ID, 'full').'" alt="'.$post->post_title.'">';
+          $html .= '<img src="'.get_the_post_thumbnail_url($post->ID, 'full').'" alt="'.wp_strip_all_tags(get_the_title($post->ID)).'">';
         } else {
-          $html .= '<img src="********.jpg" alt="'.$post->post_title.'">';
+          $html .= '<img src="********.jpg" alt="'.wp_strip_all_tags(get_the_title($post->ID)).'">';
         }
         $html .= '<br>';
-        $html .= get_the_excerpt($post->ID);
+        if(post_password_required()) {
+          $html .= 'この投稿はパスワードで保護されています';
+        } else {
+          $html .= get_the_excerpt($post->ID);
+        }
         $html .= '<br>';
         array_push($contents, $html);
       }
