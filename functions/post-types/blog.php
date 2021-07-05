@@ -42,8 +42,11 @@
       "supports" => array( 
         "title", 
         "editor", 
+        "author",
         "thumbnail", 
-        "comments" 
+        "excerpt",
+        "comments",
+        "revisions"
       ),
     );
     register_post_type($postTypeSlug, $args);
