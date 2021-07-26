@@ -99,6 +99,12 @@
     add_action('admin_menu', 'remove_menus_for_subscriber');
   }
 
+  // 固定ページの投稿サポート非表示
+  function remove_post_type_page_support() {
+    remove_post_type_support('page', 'thumbnail');
+  }
+  add_action('init', 'remove_post_type_page_support', 10);
+
   // WordPressデフォルトのfaviconを非表示
   function default_favicon_delete() {
     exit;
