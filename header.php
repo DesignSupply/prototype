@@ -2,6 +2,7 @@
 <html <?php language_attributes(); ?>>
   <head>
 <?php get_template_part('components/meta'); ?>
+<?php get_template_part('components/json-ld'); ?>
     <?php wp_head(); ?>
   </head>
   <body <?php body_class(); ?>>
