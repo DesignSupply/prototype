@@ -120,11 +120,39 @@
   }
 
   // ログアウト後にトップページへリダイレクト
-  function redirect_logout_page(){
+  function redirect_logout_page() {
     $url = esc_url(home_url());  
     wp_safe_redirect($url);
     exit();
   }
   add_action('wp_logout','redirect_logout_page');
+
+  // body開始タグ直後のHTML挿入
+  function body_open_insert() {
+    echo '<!-- body open insert html -->';
+  }
+  add_action('wp_body_open', 'body_open_insert');
+  remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
+
+  // body終了タグ直前のHTML挿入
+  function body_close_insert() {
+    echo '<!-- body close insert html -->';
+  }
+  add_action('wp_footer', 'body_close_insert');
+
+  // グローバルスタイルCSSの削除
+  function remove_my_global_styles() {
+    wp_dequeue_style('global-styles');
+  }
+  add_action('wp_enqueue_scripts', 'remove_my_global_styles');
+
+  // recentcomments用インラインスタイル削除
+  function remove_recent_comments_style() {
+    global $wp_widget_factory;
+    remove_action('wp_head', array(
+      $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style'
+    ));
+  }
+  add_action('widgets_init', 'remove_recent_comments_style');
 
 ?>

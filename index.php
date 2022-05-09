@@ -18,8 +18,27 @@
             <!-- カスタム投稿 サブループ start -->
               <?php
                 $args = array(
+                  'post_status' => 'publish',
+                  'post_type' => 'blog',
                   'posts_per_page' => 5,
-                  'post_type' => 'blog'
+                  // 'ignore_sticky_posts' => false,
+                  // 'tax_query' => array(
+                  //   'relation' => 'AND',
+                  //   array(),
+                  //   array()
+                  // ),
+                  // 'meta_query' => array(
+                  //   'relation' => 'AND',
+                  //   array(),
+                  //   array()
+                  // ),
+                  // 'date_query' => array(
+                  //   array(),
+                  //   array()
+                  // ),
+                  // 's' => '',
+                  // 'order' => 'DESC',
+                  // 'orderby' => array()
                 );
                 $the_query = new WP_Query($args);
                 if($the_query->have_posts()):
