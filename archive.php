@@ -55,6 +55,7 @@
                 <?php while($the_query->have_posts()): $the_query->the_post(); ?>
 <?php get_template_part('components/loop'); ?>                  
                 <?php endwhile; ?>
+                <?php wp_reset_postdata(); ?>
               <?php else: ?>
                 <!-- 投稿がない場合 -->
                 <p>投稿記事がありません</p>

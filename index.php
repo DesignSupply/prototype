@@ -46,11 +46,11 @@
                 <?php while($the_query->have_posts()): $the_query->the_post(); ?>
 <?php get_template_part('components/loop'); ?>
                 <?php endwhile; ?>
+                <?php wp_reset_postdata(); ?>
               <?php else: ?>
                 <!-- 投稿がない場合 -->
                 <p>該当する投稿記事がありません</p>
               <?php endif; ?>
-              <?php wp_reset_postdata(); ?>
             <!-- カスタム投稿 サブループ end -->
           </section>
         </article>
@@ -78,8 +78,8 @@
 <?php get_template_part('components/loop'); ?>
               <?php endwhile; ?>
             </div>
-            <?php endif; ?>
             <?php wp_reset_postdata(); ?>
+            <?php endif; ?>
             <!-- Ajax無限ローディング サブループ end -->
             <?php if($default_infinity_load->found_posts > $default_posts): ?>
               <!-- Ajax無限ローディング 追加読み込みボタン -->
