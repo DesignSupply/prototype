@@ -155,4 +155,16 @@
   }
   add_action('widgets_init', 'remove_recent_comments_style');
 
+  // 汎用ショートコード追加
+  // サイトURL
+  function short_cord_home_url() {
+    return esc_url(home_url());
+  }
+  add_shortcode('home_url', 'short_cord_home_url');
+  // テーマディレクトリURL
+  function short_cord_theme_url() {
+    return get_template_directory_uri();
+  }
+  add_shortcode('theme_url', 'short_cord_theme_url');
+
 ?>
