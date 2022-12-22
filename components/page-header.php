@@ -8,7 +8,7 @@
           echo get_bloginfo('name');
         } else if(is_page()) {
           // 固定ページ
-          echo single_post_title();
+          echo esc_html(single_post_title());
         } else if(is_post_type_archive(get_post_type())) {
           $postTypeObject = get_post_type_object(get_post_type());
           $postTypeName = $postTypeObject->labels->name;
@@ -30,7 +30,7 @@
           // タクソノミーページ
           $postTypeObject = get_post_type_object(get_post_type());
           $postTypeName = $postTypeObject->labels->name;
-          $termName = single_term_title('',false);
+          $termName = esc_html(single_term_title('',false));
           echo $postTypeName.'｜'.$termName;
         } else if(is_author()) {
           // 投稿者アーカイブページ

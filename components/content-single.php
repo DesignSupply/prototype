@@ -3,11 +3,11 @@
 <br>
 
 <!-- 投稿タイトル -->
-<?php echo get_the_title(); ?>
+<?php echo esc_html(get_the_title()); ?>
 <br>
 
 <!-- パーマリンク -->
-<a href="<?php echo get_permalink(); ?>"><?php echo get_permalink(); ?></a>
+<a href="<?php echo esc_url(get_the_permalink()); ?>"><?php echo esc_url(get_the_permalink()); ?></a>
 <br>
 
 <!-- ターム（複数対応） -->
@@ -31,9 +31,9 @@
 <!-- サムネイル画像 -->
 <?php
   if(has_post_thumbnail()) {
-    echo '<img src="'.get_the_post_thumbnail_url(get_the_ID(), 'full').'" alt="'.wp_strip_all_tags(get_the_title()).'">';
+    echo '<img src="'.get_the_post_thumbnail_url(get_the_ID(), 'full').'" alt="'.wp_strip_all_tags(esc_html(get_the_title())).'">';
   } else {
-    echo '<img src="********.jpg" alt="'.wp_strip_all_tags(get_the_title()).'">';
+    echo '<img src="********.jpg" alt="'.wp_strip_all_tags(esc_html(get_the_title())).'">';
   }
 ?>
 <br>
@@ -63,7 +63,7 @@
 <br>
 
 <!-- 投稿者アバター紹介文 -->
-<?php echo get_the_author_meta('description'); ?>
+<?php echo esc_html(get_the_author_meta('description')); ?>
 <br>
 
 <!-- 投稿者アーカイブページリンク -->

@@ -7,7 +7,7 @@
               ページコンテンツ（タクソノミーページ）
             </h1>
             <p>
-              「<?php echo single_term_title('',false); ?>」の記事一覧
+              「<?php echo esc_html(single_term_title('',false)); ?>」の記事一覧
             </p>
             <!-- タクソノミーページ メインループ start -->
               <?php if(have_posts()): ?>

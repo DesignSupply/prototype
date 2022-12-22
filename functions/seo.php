@@ -4,7 +4,7 @@
   function seo_meta_title() {
     if(is_page() || is_singular()) {
       // 固定ページ・シングルページ
-      return get_the_title().'｜'.get_bloginfo('name');
+      return esc_html(get_the_title()).'｜'.get_bloginfo('name');
     } else {
       return get_bloginfo('name'); 
     }
@@ -14,7 +14,7 @@
   function seo_meta_description() {
     if(is_page() || is_singular()) {
       // 固定ページ・シングルページ
-      return get_the_excerpt();
+      return esc_html(get_the_excerpt());
     } else {
       return get_bloginfo('description'); 
     }
@@ -43,7 +43,7 @@
     if(is_front_page() || is_home()) {
       return esc_url(home_url());
     } else if(is_page() || is_singular()){
-      return get_permalink();
+      return esc_url(get_the_permalink());
     } else {
       return (is_ssl() ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
     }

@@ -8,17 +8,17 @@
         $parentPostArray = array_reverse(get_post_ancestors($post)); 
         // 固定ページ（親・先祖ページ）
         foreach($parentPostArray as $index => $parentsPostId) {
-          $data_list_item = ',{ "@type": "ListItem", "position": '.($index + 2).', "item": { "@id": "'.get_permalink($parentsPostId).'", "name": "'.get_the_title($parentsPostId).'" }}';
+          $data_list_item = ',{ "@type": "ListItem", "position": '.($index + 2).', "item": { "@id": "'.esc_url(get_the_permalink($parentsPostId)).'", "name": "'.esc_html(get_the_title($parentsPostId)).'" }}';
           array_push($data_list, $data_list_item);
           $parentPages = $index + 1;
         }
         // 固定ページ（子孫ページ）
-        $data_list_item_last = ',{ "@type": "ListItem", "position": '.($parentPages + 2).', "item": { "@id": "'.get_permalink($postId).'", "name": "'.get_the_title($postId).'" }}';
+        $data_list_item_last = ',{ "@type": "ListItem", "position": '.($parentPages + 2).', "item": { "@id": "'.esc_url(get_the_permalink($postId)).'", "name": "'.esc_html(get_the_title($postId)).'" }}';
         array_push($data_list, $data_list_item_last);
       } else {
         // 固定ページ（子ページ）
         $data_list = array(
-          ',{ "@type": "ListItem", "position": 2, "item": { "@id": "'.get_the_permalink().'", "name": "'.single_post_title('',false).'" }}'
+          ',{ "@type": "ListItem", "position": 2, "item": { "@id": "'.esc_url(get_the_permalink()).'", "name": "'.esc_html(single_post_title('',false)).'" }}'
         );
       }
     } else if(is_post_type_archive()) {
@@ -44,7 +44,7 @@
       $termName = urldecode(get_query_var('term'));
       $data_list = array(
         ',{ "@type": "ListItem", "position": 2, "item": { "@id": "'.get_post_type_archive_link(get_post_type()).'", "name": "'.$postTypeName.'" }}',
-        ',{ "@type": "ListItem", "position": 3, "item": { "@id": "'.get_term_link($termName, $taxonomySlug).'", "name": "'.single_term_title('',false).'の記事一覧" }}'
+        ',{ "@type": "ListItem", "position": 3, "item": { "@id": "'.get_term_link($termName, $taxonomySlug).'", "name": "'.esc_html(single_term_title('',false)).'の記事一覧" }}'
       );
     } else if(is_singular(get_post_type())) {
       // シングルページ
@@ -52,7 +52,7 @@
       $postTypeName = $postTypeObject->labels->name;
       $data_list = array(
         ',{ "@type": "ListItem", "position": 2, "item": { "@id": "'.get_post_type_archive_link(get_post_type()).'", "name": "'.$postTypeName.'" }}',
-        ',{ "@type": "ListItem", "position": 3, "item": { "@id": "'.get_the_permalink().'", "name": "'.get_the_title().'" }}'
+        ',{ "@type": "ListItem", "position": 3, "item": { "@id": "'.esc_url(get_the_permalink()).'", "name": "'.esc_html(get_the_title()).'" }}'
       );
     } else if(is_author()) {
       // 投稿者アーカイブページ

@@ -13,17 +13,17 @@
           // 固定ページ（親・先祖ページ）
           foreach($parentPostArry as $index => $parentsPostId) {
             echo '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">'; 
-            echo '<a href="'.get_permalink($parentsPostId).'" itemprop="item"><span itemprop="name">'.get_the_title($parentsPostId).'</span></a>';
+            echo '<a href="'.esc_url(get_the_permalink($parentsPostId)).'" itemprop="item"><span itemprop="name">'.esc_html(get_the_title($parentsPostId)).'</span></a>';
             echo '<meta itemprop="position" content="'.($index + 2).'" /></li>';
             $parentPages = $index + 1;
           }
           // 固定ページ（子ページ）
           echo '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
-          echo '<a href="'.get_permalink($postId).'" itemprop="item"><span itemprop="name">'.get_the_title($postId).'</span></a>';
+          echo '<a href="'.esc_url(get_the_permalink($postId)).'" itemprop="item"><span itemprop="name">'.esc_html(get_the_title($postId)).'</span></a>';
           echo '<meta itemprop="position" content="'.($parentPages + 2).'" /></li>';
         } else {
           echo '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
-          echo '<a href="'.get_the_permalink().'" itemprop="item"><span itemprop="name">'.single_post_title('',false).'</span></a>';
+          echo '<a href="'.esc_url(get_the_permalink()).'" itemprop="item"><span itemprop="name">'.esc_html(single_post_title('',false)).'</span></a>';
           echo '<meta itemprop="position" content="2" /></li>';
         }
       } else if(is_post_type_archive()) {
@@ -53,7 +53,7 @@
         echo '<a href="'.get_post_type_archive_link(get_post_type()).'" itemprop="item"><span itemprop="name">'.$postTypeName.'</span></a>';
         echo '<meta itemprop="position" content="2" /></li>';
         echo '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
-        echo '<a href="'.get_term_link($termName, $taxonomySlug).'" itemprop="item"><span itemprop="name">'.single_term_title('',false).'の記事一覧</span></a>';
+        echo '<a href="'.get_term_link($termName, $taxonomySlug).'" itemprop="item"><span itemprop="name">'.esc_html(single_term_title('',false)).'の記事一覧</span></a>';
         echo '<meta itemprop="position" content="3" /></li>';
       } else if(is_singular(get_post_type())) {
         // シングルページ
@@ -63,7 +63,7 @@
         echo '<a href="'.get_post_type_archive_link(get_post_type()).'" itemprop="item"><span itemprop="name">'.$postTypeName.'</span></a>';
         echo '<meta itemprop="position" content="2" /></li>';
         echo '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
-        echo '<a href="'.get_the_permalink().'" itemprop="item"><span itemprop="name">'.single_post_title('',false).'</span></a>';
+        echo '<a href="'.esc_url(get_the_permalink()).'" itemprop="item"><span itemprop="name">'.esc_html(single_post_title('',false)).'</span></a>';
         echo '<meta itemprop="position" content="3" /></li>';
       } else if(is_author()) {
         // 投稿者アーカイブページ
