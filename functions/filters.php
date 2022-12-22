@@ -101,6 +101,9 @@
       return true;
     }
   }
+
+  // 自動整形機能（wpautop）設定
+  remove_filter('the_excerpt', 'wpautop');
   
   // プラグイン・テーマの自動更新設定
   add_filter('auto_update_plugin', '__return_true');

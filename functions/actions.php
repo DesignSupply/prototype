@@ -111,9 +111,6 @@
   }
   add_action('do_faviconico', 'default_favicon_delete');
 
-  // 自動整形機能（wpautop）設定
-  remove_filter('the_excerpt', 'wpautop');
-
   // コンテンツ幅定義
   if(!isset($contentWidth)) {
     $contentWidth = 1440;
