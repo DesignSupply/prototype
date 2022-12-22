@@ -3,7 +3,7 @@
   if(!is_front_page() && !is_home()) {
     if(is_page()) {
       // 固定ページ
-      if(has_parent_page()) {
+      if(get_parent_page_ID()) {
         $postId = $post->ID;
         $parentPostArray = array_reverse(get_post_ancestors($post)); 
         // 固定ページ（親・先祖ページ）

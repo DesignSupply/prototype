@@ -75,8 +75,8 @@
     }
   }
 
-  // 固定ページの親子ページチェック
-  function has_parent_page() {
+  // 固定ページの親ページID取得
+  function get_parent_page_ID() {
     global $post;
     if(is_page() && $post->post_parent) {
       return $post->post_parent;
