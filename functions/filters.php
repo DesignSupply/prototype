@@ -85,6 +85,16 @@
     }
   }
 
+  // 固定ページでスラッグ指定の子ページ判定
+  function is_subpage_by_slug($slug) {
+    global $post;
+    if(is_page($slug) || get_page_by_path($slug)->ID == $post->post_parent) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // 日付別アーカイブのチェック
   function is_date_archive() {
     if(get_query_var('year') && get_query_var('monthnum')) {
