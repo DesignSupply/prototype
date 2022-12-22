@@ -26,7 +26,7 @@
                         <?php echo get_comment_author($commentIdParent); ?>さんへの返信
                       </a>
                     <?php else: ?>
-                      <a href="#top">「<?php echo get_the_title(); ?>」へのコメント</a>
+                      <a href="#top">「<?php echo esc_html(get_the_title()); ?>」へのコメント</a>
                     <?php endif; ?>
                     <?php
                       if($comment->comment_approved == '0') {

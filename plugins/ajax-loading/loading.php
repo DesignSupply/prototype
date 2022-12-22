@@ -15,41 +15,41 @@
   $offset_value = isset($_POST['currently_loaded_count']) ? $_POST['currently_loaded_count'] : $default_show_posts;
   $loading_count = isset($_POST['additional_loading_count']) ? $_POST['additional_loading_count'] : $default_loading_posts;
 
-  // 追加の無限読み込み用クエリ
-  $infinite_loading_query = new WP_Query(
+  // 追加のAjax読み込み用クエリ
+  $ajax_loading_query = new WP_Query(
     array(
       'post_type' => $target_post_type,
       'posts_per_page' => (int)$loading_count,
       'offset' => (int)$offset_value
     )
   );
-  $posts_count = $infinite_loading_query->found_posts;
-  if($infinite_loading_query->have_posts()):
+  $posts_count = $ajax_loading_query->found_posts;
+  if($ajax_loading_query->have_posts()):
 ?>
   <?php 
-    while($infinite_loading_query->have_posts()): 
-    $infinite_loading_query->the_post(); 
+    while($ajax_loading_query->have_posts()): 
+    $ajax_loading_query->the_post(); 
   ?>
     <?php 
-      $posts = $infinite_loading_query->posts;
+      $posts = $ajax_loading_query->posts;
       $remaining_count = $posts_count - $offset_value;
       $contents = array();
       foreach ($posts as $post) {
         $html = '<br>';
-        $html .= get_the_title($post->ID);
+        $html .= esc_html(get_the_title($post->ID));
         $html .= '<br>';
-        $html .= '<a href="'.get_permalink($post->ID).'">'.get_permalink($post->ID).'</a>';
+        $html .= '<a href="'.esc_url(get_the_permalink($post->ID)).'">'.esc_url(get_the_permalink($post->ID)).'</a>';
         $html .= '<br>';
         if(has_post_thumbnail($post->ID)) {
-          $html .= '<img src="'.get_the_post_thumbnail_url($post->ID, 'full').'" alt="'.wp_strip_all_tags(get_the_title($post->ID)).'">';
+          $html .= '<img src="'.get_the_post_thumbnail_url($post->ID, 'full').'" alt="'.wp_strip_all_tags(esc_html(get_the_title($post->ID))).'">';
         } else {
-          $html .= '<img src="********.jpg" alt="'.wp_strip_all_tags(get_the_title($post->ID)).'">';
+          $html .= '<img src="********.jpg" alt="'.wp_strip_all_tags(esc_html(get_the_title($post->ID))).'">';
         }
         $html .= '<br>';
         if(post_password_required()) {
           $html .= 'この投稿はパスワードで保護されています';
         } else {
-          $html .= get_the_excerpt($post->ID);
+          $html .= esc_html(get_the_excerpt($post->ID));
         }
         $html .= '<br>';
         array_push($contents, $html);

@@ -1,9 +1,9 @@
 <!-- 投稿タイトル -->
-<?php echo get_the_title(); ?>
+<?php echo esc_html(get_the_title()); ?>
 <br>
 
 <!-- パーマリンク -->
-<a href="<?php echo get_permalink(); ?>"><?php echo get_permalink(); ?></a>
+<a href="<?php echo esc_url(get_the_permalink()); ?>"><?php echo esc_url(get_the_permalink()); ?></a>
 <br>
 
 <!-- 本文 -->

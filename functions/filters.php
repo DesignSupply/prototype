@@ -75,11 +75,21 @@
     }
   }
 
-  // 固定ページの親子ページチェック
-  function has_parent_page() {
+  // 固定ページの親ページID取得
+  function get_parent_page_ID() {
     global $post;
     if(is_page() && $post->post_parent) {
       return $post->post_parent;
+    } else {
+      return false;
+    }
+  }
+
+  // 固定ページでスラッグ指定の子ページ判定
+  function is_subpage_by_slug($slug) {
+    global $post;
+    if(is_page($slug) || get_page_by_path($slug)->ID == $post->post_parent) {
+      return true;
     } else {
       return false;
     }
@@ -91,6 +101,16 @@
       return true;
     }
   }
+
+  // 自動整形機能（wpautop）設定
+  remove_filter('the_excerpt', 'wpautop');
+
+  // ショートコード内のHTML要素許可
+  function custom_kses_allowed_html($tags, $context) {
+    $tags['img']['srcset'] = true;
+    return $tags;
+  }
+  add_filter('wp_kses_allowed_html', 'custom_kses_allowed_html', 10, 2);
   
   // プラグイン・テーマの自動更新設定
   add_filter('auto_update_plugin', '__return_true');
