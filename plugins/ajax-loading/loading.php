@@ -15,23 +15,23 @@
   $offset_value = isset($_POST['currently_loaded_count']) ? $_POST['currently_loaded_count'] : $default_show_posts;
   $loading_count = isset($_POST['additional_loading_count']) ? $_POST['additional_loading_count'] : $default_loading_posts;
 
-  // 追加の無限読み込み用クエリ
-  $infinite_loading_query = new WP_Query(
+  // 追加のAjax読み込み用クエリ
+  $ajax_loading_query = new WP_Query(
     array(
       'post_type' => $target_post_type,
       'posts_per_page' => (int)$loading_count,
       'offset' => (int)$offset_value
     )
   );
-  $posts_count = $infinite_loading_query->found_posts;
-  if($infinite_loading_query->have_posts()):
+  $posts_count = $ajax_loading_query->found_posts;
+  if($ajax_loading_query->have_posts()):
 ?>
   <?php 
-    while($infinite_loading_query->have_posts()): 
-    $infinite_loading_query->the_post(); 
+    while($ajax_loading_query->have_posts()): 
+    $ajax_loading_query->the_post(); 
   ?>
     <?php 
-      $posts = $infinite_loading_query->posts;
+      $posts = $ajax_loading_query->posts;
       $remaining_count = $posts_count - $offset_value;
       $contents = array();
       foreach ($posts as $post) {

@@ -58,31 +58,31 @@
         <article>
           <section>
             <h1>
-              無限読み込みコンテンツ
+              Ajax読み込みコンテンツ
             </h1>
-            <!-- Ajax無限ローディング サブループ start -->
+            <!-- Ajaxローディング サブループ start -->
             <?php
               // 初期表示件数
               $default_posts = 3;
-              // 無限ローディング対象クエリ
+              // Ajaxローディング対象クエリ
               $args = array(
                 'posts_per_page' => $default_posts,
                 'post_type' => 'blog'
               );
-              $default_infinity_load = new WP_Query($args);
-              if($default_infinity_load->have_posts()):
+              $default_ajax_loading_query = new WP_Query($args);
+              if($default_ajax_loading_query->have_posts()):
             ?>
             <div id="infinite_loading_container">
-              <!-- Ajax無限ローディング 追加読み込み記事 -->
-              <?php while($default_infinity_load->have_posts()): $default_infinity_load->the_post(); ?>
+              <!-- Ajaxローディング 追加読み込み記事 -->
+              <?php while($default_ajax_loading_query->have_posts()): $default_ajax_loading_query->the_post(); ?>
 <?php get_template_part('components/loop'); ?>
               <?php endwhile; ?>
             </div>
             <?php wp_reset_postdata(); ?>
             <?php endif; ?>
-            <!-- Ajax無限ローディング サブループ end -->
-            <?php if($default_infinity_load->found_posts > $default_posts): ?>
-              <!-- Ajax無限ローディング 追加読み込みボタン -->
+            <!-- Ajaxローディング サブループ end -->
+            <?php if($default_ajax_loading_query->found_posts > $default_posts): ?>
+              <!-- Ajaxローディング 追加読み込みボタン -->
               <button id="infinite_loading_button">もっと読み込む</button>
             <?php endif; ?>
           </section>
