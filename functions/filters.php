@@ -50,9 +50,15 @@
 
   // パスワード保護投稿のタイトルプレフィックス変更
   function prefix_password_protected() {
-    return '<span>【パスワード保護】</span>%s';
+    return '【パスワード保護】%s';
   }
   add_filter('protected_title_format', 'prefix_password_protected');
+
+  // 非公開投稿のタイトルプレフィックス変更
+  function prefix_private() {
+    return '【非公開】%s';
+  }
+  add_filter('private_title_format', 'prefix_private');
 
   // ユーザープロフィール情報追加
   function add_user_profile($userProfile) {
