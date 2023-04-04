@@ -1,6 +1,6 @@
 <?php
 
-  // 各種処理
+  // 各種フック処理
   require_once(dirname(__FILE__).'/functions/actions.php');
   require_once(dirname(__FILE__).'/functions/filters.php');
 

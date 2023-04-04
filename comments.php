@@ -4,9 +4,9 @@
   }
 
   // コメントリスト出力
-  require_once('components/comment-list.php');
+  require_once(dirname(__FILE__).'/components/comment-list.php');
 
   // コメントフォーム出力
-  require_once('components/comment-form.php');
+  require_once(dirname(__FILE__).'/components/comment-form.php');
 
 ?>

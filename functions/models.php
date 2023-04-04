@@ -1,11 +1,11 @@
 <?php
 
   // カスタム投稿タイプ登録
-  require_once('post-types/blog.php');
+  require_once(dirname(__FILE__).'/post-types/blog.php');
 
   // カスタム分類登録
-  require_once('taxonomies/blog-category.php');
-  require_once('taxonomies/blog-tag.php');
+  require_once(dirname(__FILE__).'/taxonomies/blog-category.php');
+  require_once(dirname(__FILE__).'/taxonomies/blog-tag.php');
 
   // メインクエリ書き換え（投稿者アーカイブ）
   function custom_archive_author($query) {
