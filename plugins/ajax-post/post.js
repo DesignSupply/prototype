@@ -17,7 +17,7 @@ if(0 < triggers.length) {
         return ;
       }).catch((error) => {
         return error.message;
-      })
+      });
     });
   })
 }

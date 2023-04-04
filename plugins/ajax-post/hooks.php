@@ -15,7 +15,7 @@
     check_ajax_referer('ajax_nonce_action', 'nonce', ture);
     echo json_encode(
       array(
-        'post_id'=>$_POST['post_id'],
+        'post_id'=>isset($_POST['post_id']) ? $_POST['post_id'] : null,
       )
     );
     wp_die();
@@ -27,7 +27,7 @@
     check_ajax_referer('ajax_nonce_action', 'nonce', ture);
     echo json_encode(
       array(
-        'post_id'=>$_POST['post_id'],
+        'post_id'=>isset($_POST['post_id']) ? $_POST['post_id'] : null,
       )
     );
     wp_die();

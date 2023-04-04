@@ -14,17 +14,19 @@ const trigger = document.getElementById('infinite_loading_button');
 const container = document.getElementById('infinite_loading_container');
 if(trigger) {
   trigger.addEventListener('click', () => {
+    const params = new URLSearchParams([
+      [ 'currently_loaded_count', current ],
+      [ 'additional_loading_count', add ],
+    ]);
     fetch(apiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      },
-      body: `currently_loaded_count=${current}&additional_loading_count=${add}`
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+      body: params
     })
-    .then(function(response) {
+    .then((response) => {
       return response.json();
     })
-    .then(function(json) {
+    .then((json) => {
       json.content.forEach(function(item) {
         container.insertAdjacentHTML('beforeend', item);
       })
@@ -33,7 +35,7 @@ if(trigger) {
         trigger.remove();
       }
     })
-    .catch(function(error) {
+    .catch((error) => {
       return error.message;
     });
   });

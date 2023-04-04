@@ -83,7 +83,7 @@
             <!-- Ajaxローディング サブループ end -->
             <?php if($default_ajax_loading_query->found_posts > $default_posts): ?>
               <!-- Ajaxローディング 追加読み込みボタン -->
-              <button id="infinite_loading_button">もっと読み込む</button>
+              <button type="button" id="infinite_loading_button">もっと読み込む</button>
             <?php endif; ?>
           </section>
         </article>
@@ -105,8 +105,8 @@
               if($ajax_post_sample_query->have_posts()):
             ?>
               <?php while($ajax_post_sample_query->have_posts()): $ajax_post_sample_query->the_post(); ?>
-                <h3><?php echo get_the_title(); ?></h3>
                 <button type="button" data-post-id="<?php echo get_the_ID(); ?>" class="ajax-post-submit">AjaxでPOST送信</button>
+<?php get_template_part('components/loop'); ?>
               <?php endwhile; ?>
               <?php wp_reset_postdata(); ?>
             <?php endif; ?>
