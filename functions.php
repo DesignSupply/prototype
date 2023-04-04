@@ -22,4 +22,7 @@
   // コメント入出力
   require_once('functions/comment.php');
 
+  // Ajax処理
+  require_once('functions/ajax.php');
+
 ?>

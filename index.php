@@ -12,9 +12,9 @@
         </article>
         <article>
           <section>
-            <h1>
+            <h2>
               ページコンテンツ（トップページ）
-            </h1>
+            </h2>
             <!-- カスタム投稿 サブループ start -->
               <?php
                 $args = array(
@@ -57,9 +57,9 @@
         <!-- article end -->
         <article>
           <section>
-            <h1>
+            <h2>
               Ajax読み込みコンテンツ
-            </h1>
+            </h2>
             <!-- Ajaxローディング サブループ start -->
             <?php
               // 初期表示件数
@@ -88,6 +88,31 @@
           </section>
         </article>
         <!-- article end -->
+        <!-- article end -->
+        <article>
+          <section>
+            <h2>
+              Ajax投稿デモ
+            </h2>
+            <!-- Ajax投稿デモ サブループ start -->
+            <?php 
+              $args = array(
+                'post_status' => 'publish',
+                'post_type' => 'blog',
+                'posts_per_page' => 3,
+              );
+              $ajax_post_sample_query = new WP_Query($args);
+              if($ajax_post_sample_query->have_posts()):
+            ?>
+              <?php while($ajax_post_sample_query->have_posts()): $ajax_post_sample_query->the_post(); ?>
+                <h3><?php echo get_the_title(); ?></h3>
+                <button type="button" data-post-id="<?php echo get_the_ID(); ?>" class="ajax-post-submit">AjaxでPOST送信</button>
+              <?php endwhile; ?>
+              <?php wp_reset_postdata(); ?>
+            <?php endif; ?>
+            <!-- Ajax投稿デモ サブループ end -->
+          </section>
+        </article>
 <?php get_sidebar(); ?>
       </main>
       <!-- main end -->
