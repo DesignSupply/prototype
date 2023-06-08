@@ -113,7 +113,7 @@
 
   // ショートコード内のHTML要素許可
   function custom_kses_allowed_html($tags, $context) {
-    $tags['img']['srcset'] = true;
+    $tags['source']['srcset'] = true;
     return $tags;
   }
   add_filter('wp_kses_allowed_html', 'custom_kses_allowed_html', 10, 2);
