@@ -22,18 +22,18 @@
         );
       }
     } else if(is_post_type_archive()) {
-      $postTypeObject = get_post_type_object(get_post_type());
+      $postTypeObject = get_post_type_object(get_query_var('post_type'));
       $postTypeName = $postTypeObject->labels->name;
       if(is_date_archive()) {
         // 日付アーカイブページ
         $data_list = array(
-          ',{ "@type": "ListItem", "position": 2, "item": { "@id": "'.get_post_type_archive_link(get_post_type()).'", "name": "'.$postTypeName.'" }}',
+          ',{ "@type": "ListItem", "position": 2, "item": { "@id": "'.get_post_type_archive_link(get_query_var('post_type')).'", "name": "'.$postTypeName.'" }}',
           ',{ "@type": "ListItem", "position": 3, "item": { "@id": "'.esc_url(home_url('/')).$wp_query->query['year'].'/'.$wp_query->query['monthnum'].'/?post_type='.$wp_query->query['post_type'].'", "name": "'.get_query_var('year').'年'.get_query_var('monthnum').'月の投稿一覧" }}'
         );
       } else {
         // アーカイブページ
         $data_list = array(
-          ',{ "@type": "ListItem", "position": 2, "item": { "@id": "'.get_post_type_archive_link(get_post_type()).'", "name": "'.$postTypeName.'" }}'
+          ',{ "@type": "ListItem", "position": 2, "item": { "@id": "'.get_post_type_archive_link(get_query_var('post_type')).'", "name": "'.$postTypeName.'" }}'
         );
       }
     } else if(is_tax()) {

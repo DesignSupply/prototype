@@ -27,12 +27,12 @@
           echo '<meta itemprop="position" content="2" /></li>';
         }
       } else if(is_post_type_archive()) {
-        $postTypeObject = get_post_type_object(get_post_type());
+        $postTypeObject = get_post_type_object(get_query_var('post_type'));
         $postTypeName = $postTypeObject->labels->name;
         if(is_date_archive()) {
           // 日付アーカイブページ
           echo '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
-          echo '<a href="'.get_post_type_archive_link(get_post_type()).'" itemprop="item"><span itemprop="name">'.$postTypeName.'</span></a>';
+          echo '<a href="'.get_post_type_archive_link(get_query_var('post_type')).'" itemprop="item"><span itemprop="name">'.$postTypeName.'</span></a>';
           echo '<meta itemprop="position" content="2" /></li>';
           echo '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
           echo '<a href="'.esc_url(home_url('/')).$wp_query->query['year'].'/'.$wp_query->query['monthnum'].'/?post_type='.$wp_query->query['post_type'].'"><span itemprop="name">'.get_query_var('year').'年'.get_query_var('monthnum').'月の投稿一覧</span></a>';
@@ -40,7 +40,7 @@
         } else {
           // アーカイブページ
           echo '<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
-          echo '<a href="'.get_post_type_archive_link(get_post_type()).'" itemprop="item"><span itemprop="name">'.$postTypeName.'</span></a>';
+          echo '<a href="'.get_post_type_archive_link(get_query_var('post_type')).'" itemprop="item"><span itemprop="name">'.$postTypeName.'</span></a>';
           echo '<meta itemprop="position" content="2" /></li>';
         }
       } else if(is_tax()) {
